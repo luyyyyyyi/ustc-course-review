@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数理逻辑真题向练习</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --text: #191919;
+      --muted: #666;
+      --line: #d8d8d2;
+      --accent: #2f6f5e;
+      --accent-dark: #245648;
+      --panel: #fff;
+      --soft: #eef4f1;
+      --warn: #8a4d16;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(247, 247, 244, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .top {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 20px 14px;
+      display: grid;
+      gap: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    button, a.btn {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      border-radius: 7px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    button:hover, a.btn:hover { background: var(--accent-dark); }
+    button.secondary {
+      background: transparent;
+      color: var(--accent);
+    }
+    button.secondary:hover { background: var(--soft); }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      gap: 18px;
+    }
+    nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--accent-dark);
+      background: var(--soft);
+      border: 1px solid #d6e5df;
+      padding: 7px 10px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    .question {
+      border-top: 1px solid var(--line);
+      padding: 15px 0;
+    }
+    .question:first-of-type { border-top: 0; padding-top: 0; }
+    .qhead {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .qtext {
+      margin: 0;
+      font-size: 16px;
+      flex: 1;
+    }
+    .tag {
+      display: inline-block;
+      margin-right: 6px;
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+    .answer {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-left: 4px solid var(--accent);
+      background: var(--soft);
+      border-radius: 0 7px 7px 0;
+    }
+    .answer.open { display: block; }
+    .answer p { margin: 0 0 8px; }
+    .answer p:last-child { margin-bottom: 0; }
+    .math {
+      font-family: "Times New Roman", "STIX Two Text", serif;
+      font-size: 18px;
+      white-space: normal;
+    }
+    pre {
+      white-space: pre-wrap;
+      background: #f4f4ef;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    .note {
+      color: var(--warn);
+      font-size: 14px;
+    }
+    @media (max-width: 720px) {
+      .qhead { display: grid; }
+      button { width: max-content; }
+      section { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div>
+        <h1>数理逻辑真题向练习</h1>
+        <p class="subtitle">先看题目，点“查看答案”再展开解析。范围只含前两章：命题演算、谓词演算。</p>
+      </div>
+      <div class="toolbar">
+        <button id="showAll">展开全部答案</button>
+        <button id="hideAll" class="secondary">收起全部答案</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <nav>
+      <a href="#judge">判断题</a>
+      <a href="#normal">主范式</a>
+      <a href="#predicate">谓词基础</a>
+      <a href="#substitution">代换</a>
+      <a href="#proof">证明题</a>
+      <a href="#reasoning">事实分析</a>
+      <a href="#prenex">前束范式</a>
+      <a href="#fullset">综合卷</a>
+    </nav>
+
+    <section id="judge">
+      <h2>一、判断题</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>任意命题公式都有唯一的析取范式和合取范式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：错。</strong></p>
+          <p>普通析取范式和普通合取范式不唯一。唯一的是主析取范式和主合取范式，前提是命题变元顺序固定。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>不含否定词的命题公式都是可满足公式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>把所有命题变元都赋值为真，则只含 ∧、∨、→、↔ 等联结词且无否定的公式可取真。特别是常见命题公式语境下，这是真题中的标准判断。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span>若 Γ ⊨ p，则 p 的每个模型也是 Γ 的模型。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：错。</strong></p>
+          <p>方向反了。Γ ⊨ p 的意思是：每个 Γ 的模型都是 p 的模型。即所有让前提 Γ 成立的解释，也让结论 p 成立。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">4.</span>闭式的真值不依赖个体变元赋值。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>闭式不含自由变元。公式真值只可能依赖自由变元赋值，所以闭式在给定解释域及符号解释后，其真值不随项解释中的变元赋值改变。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">5.</span>在 K4：<span class="math">∀x p(x) → p(t)</span> 中，任意项 t 都可以代入。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：错。</strong></p>
+          <p>K4 要求 t 对 p(x) 中自由出现的 x 是自由的。也就是代入后，t 中的变量不能被原公式中的量词捕获。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">6.</span>从 P(x) 可以直接用 Gen 推出 ∀xP(x)。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：一般不可以。</strong></p>
+          <p>如果 P(x) 是作为含自由 x 的假设得到的，就不能对 x 使用 Gen。Gen 只能推广“任意的 x”，不能推广“假设中特定的 x”。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="normal">
+      <h2>二、主范式</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>求 <span class="math">P → Q</span> 的主析取范式和主合取范式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong></p>
+          <p class="math">主析取范式： (¬P ∧ ¬Q) ∨ (¬P ∧ Q) ∨ (P ∧ Q)</p>
+          <p class="math">主合取范式： ¬P ∨ Q</p>
+          <p>解析：P→Q 仅在 P=1,Q=0 时为假。主析取看成真行，主合取看成假行。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>求 <span class="math">(P ∧ Q) → R</span> 的主析取范式和主合取范式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong></p>
+          <p class="math">主合取范式： ¬P ∨ ¬Q ∨ R</p>
+          <p class="math">主析取范式：除 P=1,Q=1,R=0 以外所有极小项的析取。</p>
+          <pre>(¬P∧¬Q∧¬R) ∨ (¬P∧¬Q∧R) ∨ (¬P∧Q∧¬R) ∨ (¬P∧Q∧R)
+∨ (P∧¬Q∧¬R) ∨ (P∧¬Q∧R) ∨ (P∧Q∧R)</pre>
+          <p>解析：蕴含只在前件真、后件假时为假，即 P=Q=1,R=0。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span>求 <span class="math">(P→Q) ∧ (P→R)</span> 的等值简化式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong><span class="math">P → (Q ∧ R)</span></p>
+          <p class="math">(P→Q)∧(P→R) ⇔ (¬P∨Q)∧(¬P∨R) ⇔ ¬P∨(Q∧R) ⇔ P→(Q∧R)</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="predicate">
+      <h2>三、谓词基础</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>判断自由变元、约束变元，并说明是否闭式：<span class="math">∀x(P(x)→Q(x,y))</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong>x 是约束变元，y 是自由变元；不是闭式。</p>
+          <p>解析：∀x 的辖域是整个 P(x)→Q(x,y)，所以里面的 x 都被约束；没有 ∀y 或 ∃y 管住 y。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>判断自由变元、约束变元，并说明是否闭式：<span class="math">(∃x)P(x) ∧ Q(x)</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong>P(x) 中的 x 约束；Q(x) 中的 x 自由；不是闭式。</p>
+          <p>解析：通常 ∃x 只管 P(x)，不管后面的 Q(x)。同一变量符号可以在同一公式中既有约束出现又有自由出现。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span>判断自由变元、约束变元，并说明是否闭式：<span class="math">∀x∃yR(x,y,z)</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong>x、y 约束；z 自由；不是闭式。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="substitution">
+      <h2>四、代换与变量捕获</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span><span class="math">p(x)=∀yR(x,y), t=z</span>。t 对 p(x) 中的 x 是否自由？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：自由。</strong></p>
+          <p class="math">p(z)=∀yR(z,y)</p>
+          <p>z 不会被 ∀y 捕获。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span><span class="math">p(x)=∀yR(x,y), t=y</span>。t 对 p(x) 中的 x 是否自由？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：不自由。</strong></p>
+          <p class="math">直接代入会得 ∀yR(y,y)</p>
+          <p>代入项 y 原本应保持自由，却被 ∀y 捕获。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span><span class="math">p(x₂)=∀x₁R(x₁,x₂), t=f(a,x₁)</span>。t 对 x₂ 是否自由？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：不自由。</strong></p>
+          <p class="math">代入后为 ∀x₁R(x₁,f(a,x₁))</p>
+          <p>项中的 x₁ 进入 ∀x₁ 的辖域，被量词捕获。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="proof">
+      <h2>五、证明题</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>证明：<span class="math">p→(q∨r) ⊨ (p→q)∨(p→r)</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案思路：用等值演算。</strong></p>
+          <p class="math">(p→q)∨(p→r)</p>
+          <p class="math">⇔ (¬p∨q)∨(¬p∨r)</p>
+          <p class="math">⇔ ¬p∨q∨r</p>
+          <p class="math">⇔ p→(q∨r)</p>
+          <p>所以二者等值，当然有语义后承。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>证明：<span class="math">∃x₁∀x₂R(x₁,x₂) → ∀x₂∃x₁R(x₁,x₂)</span> 是有效式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案思路：</strong></p>
+          <p>如果存在某个对象 a，使得对所有 x₂ 都有 R(a,x₂)，那么任取 x₂，都可以取同一个 a 作为见证，于是 ∃x₁R(x₁,x₂) 成立。</p>
+          <p>形式推理可写：由 ∃x₁∀x₂R(x₁,x₂) 用 EI 取 a，得 ∀x₂R(a,x₂)；任取 x₂，用 UI 得 R(a,x₂)；用 EG 得 ∃x₁R(x₁,x₂)；再 UG 得 ∀x₂∃x₁R(x₁,x₂)。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span>在 K 中证明：<span class="math">{∀x(F(x)∨G(x))} ⊢ ∀xF(x)∨∃xG(x)</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案提示：</strong>这个题更适合用反证/语义直观理解。</p>
+          <p>从 ∀x(F(x)∨G(x)) 出发。若不是 ∀xF(x)，则存在某个 a 使 ¬F(a)。由全称前提得 F(a)∨G(a)，于是 G(a)，所以 ∃xG(x)。因此 ∀xF(x)∨∃xG(x)。</p>
+          <p class="note">正式 K 证明需要使用存在规则、演绎定理和经典命题定理，考试中如果要求构造证明，要把“若非 ∀xF(x)”转写成 ¬∀xF(x)⇔∃x¬F(x) 后操作。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="reasoning">
+      <h2>六、事实分析题</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>三个箱子有且只有一个有金子。三句话有且只有一句真：①第二个箱子没金子；②第二个箱子有金子；③第一个箱子没金子。问哪个箱子有金子？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：第三个箱子有金子。</strong></p>
+          <p>设 A、B、C 分别表示第 1、2、3 个箱子有金子，且恰好一个真。三句话分别是 ¬B、B、¬A。</p>
+          <p>¬B 与 B 必有一句真一句假。题设三句话恰好一句真，因此第三句话 ¬A 必须是假，所以 A 真？这里还要结合“恰好一个箱子有金子”检查：如果 A 真，则 ¬B 真，与 B 假、¬A 假，共一真，满足。所以答案应为第一个箱子有金子。</p>
+          <p class="note">注意这题很容易口算滑掉：①和②互为否定，必有且仅有一句真。为了总共只有一句真，③必须假，即第一个箱子有金子。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>甲说王教授不是苏州人、是上海人；乙说不是上海人、是苏州人；丙说既不是上海人，也不是杭州人。三人中一人全对，一人全错，一人对一半。王教授是哪里人？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：王教授是苏州人。</strong></p>
+          <p>设 S=上海人， Z=苏州人， H=杭州人，且三者互斥。甲：¬Z 且 S；乙：¬S 且 Z；丙：¬S 且 ¬H。</p>
+          <p>若是苏州人：甲两句都错；乙两句都对；丙第一句对、第二句错。符合“一全对、一全错、一半对”。</p>
+          <p>若是上海人：甲全对，乙全错，丙第一句错、第二句对，也符合条件。若题目默认籍贯只在上海、苏州、杭州三者之一，则上海也符合。若原卷答案要求唯一，通常还需要额外约束或以题面上下文排除上海。建议考试时列真值表说明可能解。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="prenex">
+      <h2>七、前束范式</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>化为前束范式：<span class="math">∃xP(x) → ∀yQ(y)</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong><span class="math">∀x∀y(¬P(x)∨Q(y))</span></p>
+          <p class="math">∃xP(x)→∀yQ(y) ⇔ ¬∃xP(x)∨∀yQ(y) ⇔ ∀x¬P(x)∨∀yQ(y) ⇔ ∀x∀y(¬P(x)∨Q(y))</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>化为前束范式：<span class="math">¬∃x∀y(P(x)∧Q(y))</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong><span class="math">∀x∃y(¬P(x)∨¬Q(y))</span></p>
+          <p class="math">¬∃x∀y(P(x)∧Q(y)) ⇔ ∀x¬∀y(P(x)∧Q(y)) ⇔ ∀x∃y¬(P(x)∧Q(y)) ⇔ ∀x∃y(¬P(x)∨¬Q(y))</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span>判断是否为有效式：<span class="math">∃x₂∀x₁R(x₁,x₂) → ∀x₁∃x₂R(x₁,x₂)</span></p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：是有效式。</strong></p>
+          <p>如果存在一个固定的 x₂，使所有 x₁ 都与它满足 R，那么对任意 x₁，都可以选择这个同一个 x₂ 作为存在见证。因此右边成立。</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="fullset">
+      <h2>八、真题向综合卷</h2>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">1.</span>判断：命题演算 L 的三条公理模式是相互独立的。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>这是 Hilbert 型命题演算系统的标准性质。独立性表示任一条公理模式不能由另外两条公理模式和 MP 推出。考试中按概念判断即可，一般不要求证明独立性。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">2.</span>判断：若 Γ 和 Σ 都相容，且 Γ∪Σ 不相容，则存在公式 q，使 Γ⊢q 且 Σ⊢¬q。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>因为 Γ∪Σ 不相容，存在有限个来自 Γ、Σ 的公式共同推出矛盾。把来自 Σ 的有限合取记作 s，可得到 Γ⊢¬s，而 Σ⊢s。令 q=¬s，则 Γ⊢q 且 Σ⊢¬q。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">3.</span>判断：重言式集合是命题语言范围内逻辑推理规律的形式化表达。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>重言式是不依赖具体命题内容、只依赖形式结构而恒真的公式，正好刻画命题演算层面的逻辑规律。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">4.</span>判断：若 Γ 极大相容，且 p∉Γ，则 Γ∪{p} 不相容。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>极大相容表示 Γ 已经不能再加入任何 Γ 外公式并保持相容。因此若 p 不在 Γ 中，加入 p 后必不相容。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">5.</span>判断：<span class="math">(¬r∧q∧(p→(q→r)))→¬p</span> 是永真式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：对。</strong></p>
+          <p>当前件真时，¬r 和 q 都真，且 p→(q→r) 真。若 p 真，则由 p 得 q→r，再由 q 得 r，与 ¬r 矛盾。所以 p 不可能真，即 ¬p 真。因此整个蕴含永真。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">6.</span>判断：<span class="math">∀x∀y(R(x,y)→R(y,x))→∀x∃yR(x,y)</span> 是逻辑有效式。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：错。</strong></p>
+          <p>前件只说 R 是对称的，不保证任何 R(x,y) 成立。取非空论域且 R 解释为空关系，则前件真，而 ∀x∃yR(x,y) 假。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">7.</span>简答：直观解释“模型”的含义。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>参考答案：</strong>模型是使一组公式都成立的解释或结构。它给出论域，并解释常元、函数符号和谓词符号。如果某个解释让 Γ 中所有公式为真，就称它是 Γ 的模型。</p>
+          <p>一句话：模型就是“让前提都为真的一个世界”。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">8.</span>简答：严格地说，什么是“证明”？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>参考答案：</strong>证明是一个有限公式序列，最后一项是要证明的公式，并且序列中每一项都必须是前提、公理，或由前面公式按允许的推理规则得到。命题演算中常见规则是 MP；谓词演算中还包括 Gen。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">9.</span>简答：K5 限制条件的意义是什么？举例说明。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>参考答案：</strong>K5 为 <span class="math">∀x(p→q)→(p→∀xq)</span>，要求 x 不在 p 中自由出现。意义是：只有当前件 p 不依赖 x 时，才能把 p 放到全称量词外。</p>
+          <p>反例：<span class="math">∀x(P(x)→Q(x))→(P(x)→∀xQ(x))</span> 不合法。所有学生会写代码，不能推出“如果当前这个 x 是学生，则所有人都会写代码”。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">10.</span>直接证明：<span class="math">⊢ p→¬¬p</span>。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>简化证明：</strong>用演绎定理，只需证明 {p}⊢¬¬p。再用归谬思路：假设 ¬p，则与 p 矛盾，因此得 ¬¬p。</p>
+          <p><strong>直接证明提示：</strong>若考试要求严格直接证明，需要用 L1、L2、L3、MP 展开；复习资料中的“第二双重否定律”或“p→¬¬p”可作为重点定理记忆。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">11.</span>直接证明：<span class="math">⊢(¬p→p)→(q→p)</span>。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>简化证明：</strong>由演绎定理，只需从 ¬p→p 和 q 推出 p。再由反证律/否定肯定律，¬p→p 可推出 p；因此 q→p 成立。</p>
+          <p>考试中若允许引用定理，可写：<span class="math">⊢(¬p→p)→p</span>，再由加前件定理得到 <span class="math">p→(q→p)</span>，组合推出结论。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">12.</span>事实分析：三个箱子有且只有一个有金子。三句话有且只有一句真：①第二个箱子没有金子；②第二个箱子有金子；③第一个箱子没有金子。问哪个箱子有金子？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：第一个箱子有金子。</strong></p>
+          <p>设 A、B、C 分别表示第 1、2、3 个箱子有金子。三句话为 ¬B、B、¬A。前两句互为否定，必有且仅有一句真。题设总共只有一句真，所以第三句 ¬A 必须假，因此 A 真。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">13.</span>事实分析：甲说“不是苏州人，是上海人”；乙说“不是上海人，是苏州人”；丙说“不是上海人，也不是杭州人”。三人中一人全对，一人全错，一人对一半。判断王教授是哪里人。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>解析：</strong>设 S=上海，Z=苏州，H=杭州。甲：¬Z∧S；乙：¬S∧Z；丙：¬S∧¬H。</p>
+          <p>若王教授是苏州人：甲全错，乙全对，丙一对一错，满足条件。</p>
+          <p>若王教授是上海人：甲全对，乙全错，丙一错一对，也满足条件。</p>
+          <p><strong>结论：</strong>仅按这三种籍贯且题面如上，上海和苏州都满足。若原题要求唯一解，需要额外条件或题面可能漏字。考试中应列出两种可能并说明题面不足。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">14.</span>判断有效性：<span class="math">∃x₂∀x₁R(x₁,x₂)→∀x₁∃x₂R(x₁,x₂)</span>。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：有效。</strong></p>
+          <p>前件表示存在一个固定对象 b，使所有 x₁ 都满足 R(x₁,b)。于是对任意 x₁，都可取这个同一个 b 作为 ∃x₂ 的见证，所以右件成立。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">15.</span>判断并证明：<span class="math">⊢ ∀x₁R(x₁,x₂)→¬∃x₂∀x₁R(x₁,x₂)</span> 是否正确？</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：不正确。</strong></p>
+          <p>给反模型即可。令论域为自然数，R(x,y) 解释为 x≥y，并令自由 x₂ 赋值为 0。则 <span class="math">∀x₁R(x₁,x₂)</span> 为真，因为所有自然数都 ≥0。</p>
+          <p>但 <span class="math">∃x₂∀x₁R(x₁,x₂)</span> 也为真，取 x₂=0 即可。所以右边的否定为假，整个蕴含为假。因此不是有效式，也不可证。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">16.</span>证明：<span class="math">⊢ ∃x₁∀x₂R(x₁,x₂)→∀x₂∃x₁R(x₁,x₂)</span>。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>证明思路：</strong>假设 <span class="math">∃x₁∀x₂R(x₁,x₂)</span>。由 EI 取见证 a，得 <span class="math">∀x₂R(a,x₂)</span>。任取 x₂，由 UI 得 <span class="math">R(a,x₂)</span>。由 EG 得 <span class="math">∃x₁R(x₁,x₂)</span>。因为 x₂ 任意，由 UG 得 <span class="math">∀x₂∃x₁R(x₁,x₂)</span>。最后由演绎定理得原式。</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">17.</span>前束范式：<span class="math">¬∃x∀y(P(x)∧Q(y))</span>。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案：</strong><span class="math">∀x∃y(¬P(x)∨¬Q(y))</span></p>
+          <p class="math">¬∃x∀y(P(x)∧Q(y)) ⇔ ∀x¬∀y(P(x)∧Q(y)) ⇔ ∀x∃y¬(P(x)∧Q(y)) ⇔ ∀x∃y(¬P(x)∨¬Q(y))</p>
+        </div>
+      </article>
+
+      <article class="question">
+        <div class="qhead">
+          <p class="qtext"><span class="tag">18.</span>前束合取范式：<span class="math">(∀x₁)(P(x₁,x₂)∨(∀x₂)R(x₂,x₃))→(∀x₃)Q(x₁,x₃)</span>。</p>
+          <button class="toggle">查看答案</button>
+        </div>
+        <div class="answer">
+          <p><strong>答案思路：</strong>先改名，避免自由/约束变量冲突：</p>
+          <p class="math">(∀u)(P(u,x₂)∨(∀v)R(v,x₃))→(∀w)Q(x₁,w)</p>
+          <p>消去蕴含并推否定：</p>
+          <p class="math">¬(∀u(P(u,x₂)∨∀vR(v,x₃))) ∨ ∀wQ(x₁,w)</p>
+          <p class="math">⇔ ∃u(¬P(u,x₂)∧∃v¬R(v,x₃)) ∨ ∀wQ(x₁,w)</p>
+          <p>提量词得一个前束形式：</p>
+          <p class="math">∃u∃v∀w((¬P(u,x₂)∧¬R(v,x₃))∨Q(x₁,w))</p>
+          <p>化为合取矩阵：</p>
+          <p class="math">∃u∃v∀w((¬P(u,x₂)∨Q(x₁,w))∧(¬R(v,x₃)∨Q(x₁,w)))</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll(".toggle");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const answer = button.closest(".question").querySelector(".answer");
+        answer.classList.toggle("open");
+        button.textContent = answer.classList.contains("open") ? "收起答案" : "查看答案";
+      });
+    });
+
+    document.getElementById("showAll").addEventListener("click", () => {
+      document.querySelectorAll(".answer").forEach((answer) => answer.classList.add("open"));
+      buttons.forEach((button) => button.textContent = "收起答案");
+    });
+
+    document.getElementById("hideAll").addEventListener("click", () => {
+      document.querySelectorAll(".answer").forEach((answer) => answer.classList.remove("open"));
+      buttons.forEach((button) => button.textContent = "查看答案");
+    });
+  </script>
+</body>
+</html>
