@@ -11,3 +11,4 @@
 ## 数理逻辑基础
 
 - [交互式真题向练习](https://luyyyyyyi.github.io/ustc-course-review/数理逻辑基础/真题向练习.html)
+- [资料目录](https://luyyyyyyi.github.io/ustc-course-review/数理逻辑基础/资料目录.html)
