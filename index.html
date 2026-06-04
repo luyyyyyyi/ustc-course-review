@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0;url=./数理逻辑.html">
   <title>科大课程复习</title>
   <style>
     :root {
@@ -53,41 +52,50 @@
       color: var(--muted);
     }
 
-    a {
-      display: inline-flex;
-      align-items: center;
-      min-height: 40px;
-      padding: 8px 12px;
-      border: 1px solid var(--accent);
-      border-radius: 7px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
+    .course-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
     }
 
-    a:hover {
-      background: var(--accent-dark);
-    }
-
-    .fallback {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-left: 4px solid var(--accent);
-      border-radius: 0 7px 7px 0;
-      background: var(--soft);
+    .course {
+      display: block;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
       color: var(--text);
+      text-decoration: none;
+      background: #fff;
+    }
+
+    .course:hover {
+      border-color: var(--accent);
+      background: var(--soft);
+    }
+
+    .course strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent-dark);
+      font-size: 17px;
+    }
+
+    .course span {
+      color: var(--muted);
+      font-size: 14px;
     }
   </style>
-  <script>
-    window.location.replace("./数理逻辑.html");
-  </script>
 </head>
 <body>
   <main>
     <h1>科大课程复习</h1>
-    <p>正在进入数理逻辑真题向练习。</p>
-    <a href="./数理逻辑.html">打开数理逻辑练习</a>
-    <p class="fallback">如果页面没有自动跳转，请使用上面的链接进入练习页。</p>
+    <p>课程复习资料与交互式练习页。</p>
+    <div class="course-list">
+      <a class="course" href="./数理逻辑基础/真题向练习.html">
+        <strong>数理逻辑基础</strong>
+        <span>命题演算、谓词演算真题向练习</span>
+      </a>
+    </div>
   </main>
 </body>
 </html>
