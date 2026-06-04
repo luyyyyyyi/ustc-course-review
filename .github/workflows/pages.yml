@@ -32,7 +32,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/index.html
-          cp -R 数理逻辑 _site/
+          cp 数理逻辑.html _site/数理逻辑.html
           touch _site/.nojekyll
 
       - name: Upload Pages artifact
